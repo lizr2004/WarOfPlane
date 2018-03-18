@@ -8,22 +8,21 @@ plane::plane(QWidget *parent) :
 	ui->setupUi(this);
 	this->setFixedSize(80,120);
 	hp = 100;
-	x = qrand()%1100; y = -100;
+	x = qrand()%700+100; y = -100;
 	qDebug() << x << ' ' << y << ' ' << hp;
-	connect(this, SIGNAL(update(bool)), this, SLOT(do_update(bool)));
-	emit update(false);
+	do_update(false);
 }
 
 void plane::subHp(int sub)
 {
 	hp-=sub;
-	emit update(false);
+	do_update(false);
 	return;
 }
 
 void plane::do_update(bool move)
 {
-	if(move)y++;
+	if(move)y+=2;
 	setGeometry(QRect(x,y,x+80,y+120));
 	ui->hpLabel->setText(QString::number(hp));
 }

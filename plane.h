@@ -18,15 +18,11 @@ public:
 
 public slots:
 	void subHp(int sub);
-
-signals:
-	void update(bool move);
+	void do_update(bool move);
 
 private:
 	Ui::plane *ui;
 
-private slots:
-	void do_update(bool move);
 };
 
 #endif // PLANE_H

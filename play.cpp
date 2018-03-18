@@ -6,15 +6,11 @@ play::play(QWidget *parent) :
 	ui(new Ui::play)
 {
 	ui->setupUi(this);
-	setFixedSize(1200,900);
+	setFixedSize(800, 600);
 	move_timer = new QTimer();
-//	spawn_timer = new QTimer();
 	connect(move_timer, SIGNAL(timeout()), this, SLOT(update()));
-//	connect(spawn_timer, SIGNAL(timeout()), this, SLOT(addPlane()));
 	connect(ui->restartButton, SIGNAL(clicked()), this, SLOT(restart()));
-//	connect(ui->restartButton, SIGNAL(clicked()), this, SLOT(addPlane()));
-	move_timer->start(15);
-//	spawn_timer->start(2000);
+	move_timer->start(50);
 	addPlane();
 }
 
@@ -27,22 +23,19 @@ void play::addPlane()
 }
 void play::update(bool x)
 {
-	const int R = RAND_MAX >> 8;
+	const int R = RAND_MAX >> 6;
 	if(qrand()<R)addPlane();
 	for(auto it = pls.begin();it!=pls.end();it++)
 	{
 		plane *now = *it;
-//		now->y+=x;
-//		now->setGeometry(QRect(now->x,now->y,now->x+80,now->y+120));
-		emit now->update(x);
+		now->do_update(x);
 		if(now->hp <=0 || now->y >=800)
 		{
 			ui->continer->removeWidget(now);
-			delete now;
 			pls.erase(it);
+			delete now;	
 		}
 	}
-//	ui->infoBar->setGeometry(QRect(0,130,400,300));
 	return;
 }
 
